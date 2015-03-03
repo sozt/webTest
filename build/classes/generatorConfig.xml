@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+ 
+ 
+<generatorConfiguration>
+    <!--数据库驱动jar -->
+    <classPathEntry location="D:\repo\mysql\mysql-connector-java\5.1.33\mysql-connector-java-5.1.33.jar" />
+ 
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+        <!--去除注释 （true好像不起作用） -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+ 
+        <!--数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://121.42.137.212:3306/youming_dbs"
+                        userId="root"
+                        password="gwunited!234">
+        </jdbcConnection>
+        <!--默认false
+           Java type resolver will always use java.math.BigDecimal if the database column is of type DECIMAL or NUMERIC.
+         -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+ 
+        <!--生成实体类 指定包名 以及生成的地址 （可以自定义地址，但是路径不存在不会自动创建  使用Maven生成在target目录下，会自动创建） -->
+        <javaModelGenerator targetPackage="com.gwunited.youmingserver.entity" targetProject="youmingserver">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--生成SQLMAP文件 -->
+        <sqlMapGenerator targetPackage="com.gwunited.youmingserver.repository.mybatis"  targetProject="youmingserver">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+        <!--生成Dao文件 可以配置 type="XMLMAPPER"生成xml的dao实现  context id="DB2Tables" 修改targetRuntime="MyBatis3"  -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.gwunited.youmingserver.repository.mybatis"  targetProject="youmingserver">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+ 
+        <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->   
+       <!-- <table tableName="alias_pointer" domainObjectName="AliasPointer" />
+       <table tableName="alias_store" domainObjectName="AliasStore" />
+       <table tableName="swapping" domainObjectName="Swapping" /> 
+       <table tableName="user_last_swapping" domainObjectName="UserLastSwapping" /> -->
+            
+        <table tableName="card" domainObjectName="Card" />
+            <!--  
+        <table tableName="appversion" domainObjectName="AppVersion" /> 
+        <table tableName="card_alias" domainObjectName="CardAlias" />
+        <table tableName="card_crowd" domainObjectName="CardCrowd" />
+        <table tableName="card_group" domainObjectName="CardGroup" />
+        <table tableName="crowd" domainObjectName="Crowd" />
+        <table tableName="crowd_alias" domainObjectName="CrowdAlias" /> 
+        <table tableName="device" domainObjectName="Device" /> 
+        <table tableName="face_crowd_mascot" domainObjectName="FaceCrowdMascot" />
+        <table tableName="face_crowd_temp" domainObjectName="FaceCrowdTemp" />
+        <table tableName="groups" domainObjectName="Group" /> 
+        <table tableName="image" domainObjectName="Image" />
+        <table tableName="login_user" domainObjectName="LoginUser" />
+        <table tableName="push_message" domainObjectName="PushMessage" /> 
+        <table tableName="swapping" domainObjectName="Swapping" /> 
+        <table tableName="user" domainObjectName="User" />
+        <table tableName="user_alias" domainObjectName="UserAlias" /> 
+        <table tableName="user_mycard" domainObjectName="UserMyCard" /> 
+        <table tableName="user_device_push" domainObjectName="UserDevicePush" />
+        <table tableName="user_favoritecard" domainObjectName="UserFavoriteCard" />
+        <table tableName="user_group" domainObjectName="UserGroup" />
+        <table tableName="user_last_swapping" domainObjectName="UserLastSwapping" />
+        <table tableName="user_location" domainObjectName="UserLocation" />
+        <table tableName="user_othercard" domainObjectName="UserOtherCard" />-->   
+        
+            
+    </context>
+</generatorConfiguration>
