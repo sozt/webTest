@@ -7,6 +7,6 @@ public class login {
 		int b = a;
 		int n = b-2;
 		System.out.println(n-a+1);
-		String str = "";
+		String str = "sozt";
 	}
 }
