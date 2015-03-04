@@ -9,5 +9,6 @@ public class login {
 		System.out.println(n-a+1);
 		String str = "sozt";
 		String[] sp = str.split("oz");
+		System.out.println("done");
 	}
 }
