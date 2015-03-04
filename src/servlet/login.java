@@ -7,7 +7,7 @@ public class login {
 		int b = a;
 		int n = b-2;
 		System.out.println(n-a+1);
-		String str = "sozt";
+		String str = "sozt1990";
 		String[] sp = str.split("ozt");
 	}
 }
