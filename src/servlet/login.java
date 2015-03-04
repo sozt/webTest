@@ -6,6 +6,7 @@ public class login {
 		int a = 1+1;
 		int b = a;
 		int n = b-2;
-		System.out.println(n-a);
+		System.out.println(n-a+1);
+		String str = "";
 	}
 }
