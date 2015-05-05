@@ -128,7 +128,13 @@ public class MongoDemo {
 				user.put("username", "ss");
 				user.put("age", "10");
 				user.put("age1", "10");
-				dbc.insert(user);
+				
+				if(dbc.find(user) == null){
+					dbc.insert(user);
+				}else{
+					user.put("age", 20);
+					dbc.save(user);
+				}
 //				System.out.println();
 			}
 			System.out.println("end:"+(System.currentTimeMillis()-a));

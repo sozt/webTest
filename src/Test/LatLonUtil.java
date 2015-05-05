@@ -134,7 +134,9 @@ public class LatLonUtil {
 		System.out.println("ppsize:" + pointS.size());
 
 		// 911717.0 34.264648,108.952736,39.904549,116.407288
-		double dis = getDistance2(116.4592, 39.94563, 116.4579, 39.95874);
+//		38.3976280000,110.8531650000
+//		38.3917129571,110.8466646952
+		double dis = getDistance2(116.459, 39.94571, 116.45925899414061, 39.945635330078119);
 		System.out.println("1:" + dis);
 	}
 }
