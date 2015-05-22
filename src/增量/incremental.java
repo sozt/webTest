@@ -11,7 +11,7 @@ public class incremental {
 
 	public static void main(String[] args) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String lastTimeStr = "2015-05-04 17:09:00";
+		String lastTimeStr = "2015-05-06 10:59:00";
 		long lastTime = 0l;
 		try {
 			lastTime = sdf.parse(lastTimeStr).getTime();

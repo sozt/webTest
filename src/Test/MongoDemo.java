@@ -2,9 +2,11 @@ package Test;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.junit.Test;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -36,6 +38,7 @@ public class MongoDemo {
 			}*/
 
 			db.authenticate("youming", "youming!234".toCharArray());
+			
 			DBCollection users = db.getCollection("user");
 			// 查询所有的数据
 			DBCursor cur = users.find();
@@ -112,6 +115,91 @@ public class MongoDemo {
 			}.start();
 		}
 	}
+	
+	@Test
+	public void findByGroup(){
+		try {
+			Mongo mg = new Mongo("121.42.137.212");
+			// 查询所有的Database
+			/*for (String name : mg.getDatabaseNames()) {
+				System.out.println("dbName: " + name);
+			}*/
+			System.out.println(mg.toString());
+			DB db = mg.getDB("youming_dbs");
+			// 查询所有的聚集集合
+//			for (String name : db.getCollectionNames()) {
+//				System.out.println("collectionName: " + name);
+//			}
+
+			boolean bo = db.authenticate("youming", "youming!234".toCharArray());
+			System.out.println(bo);
+			
+//			DBCollection users = db.getCollection("chat");
+//			System.out.println(users);
+//			// 查询所有的数据
+//			DBCursor cur = users.find();
+//			while (cur.hasNext()) {
+//				cur.next();
+//			}
+//			System.out.println(cur.count());
+			
+			DBObject key = new BasicDBObject();
+			key.put("sender_id", true);
+			
+			DBObject cond = new BasicDBObject();
+//			cond.put("sender_id", 1011);
+//			cond.put("receiver_id", 5);
+//			cond.put("receiver_id", 1011);
+			
+			DBObject initial = new BasicDBObject();
+			initial.put("count", 0);
+			initial.put("count1", "hbak");
+			initial.put("lastId", "123");
+			initial.put("lastDate", 0);
+			initial.put("doc", "[");
+			
+			String reduce = "function(doc, aggr){" +
+	                "            aggr.count += 1;"
+	                + "aggr.doc += '{\"receiver_id\":'+doc.receiver_id+',\"content\":\"'+doc.content+'\",\"date\":'+doc.date+'},';"
+	                +" if(doc.date > aggr.lastDate){aggr.lastDate = doc.date;aggr.lastId = doc._id }       }";
+			
+//			String reduce = "function(doc, aggr){}";
+			
+			DBCollection chat = db.getCollection("chat");
+			System.out.println(chat+","+chat.count());
+			DBObject chatsGroup = chat.group(key, cond, initial, reduce);
+			System.out.println(chatsGroup);
+			Set<String> set = chatsGroup.keySet();
+			System.out.println("set.size:"+set.size());
+			long lastDate = 0l;
+			String lastId = "";
+			if(set != null && !set.isEmpty()){
+				for(String str : set){
+					System.out.println(str);
+					DBObject ch = (DBObject) chatsGroup.get(str);
+					String doc = (String) ch.get("doc");
+					doc = doc.substring(0, doc.lastIndexOf(","))+"]";
+//					System.out.println(doc);
+					ch.put("doc", doc);
+					if(Long.parseLong(ch.get("lastDate").toString()) > lastDate){
+						lastDate = Long.parseLong(ch.get("lastDate").toString());
+						lastId = ch.get("lastId").toString();
+					}
+					System.out.println("id"+ch.get("lastId")+",lastdate:"+lastDate);
+					System.out.println(ch);
+				}
+			}
+			System.out.println("lastId"+lastId+",lastDate:"+lastDate);
+			BasicDBList  chatList = (BasicDBList) chatsGroup;
+			chatList.size();
+			
+			
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	public void add(){
 		try{
