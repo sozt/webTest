@@ -52,7 +52,7 @@ public class mysqlDemo {
 		Connection con = null;
 		Statement stmt = null;
 		String s = null;
-		
+
 		String sqlstr;
 		ResultSet rs = null;
 		try {
@@ -60,12 +60,12 @@ public class mysqlDemo {
 			con = DriverManager.getConnection(url, user, password);
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
-			sqlstr = "select id from user where id not in (select friend_id from user_friend where user_id = 1010 ) and id != 1010";
+			sqlstr = "select id from user where id not in (select friend_id from user_friend where user_id = 1167 ) and id != 1167 limit 500";
 			rs = stmt.executeQuery(sqlstr);
 			
 			PreparedStatement pst = con.prepareStatement("INSERT INTO `youming_dbs`.`user_friend` (`id`, `user_id`, `friend_id`, `relation_info_datas`, `source_datas`, `is_favorite`, `create_date`, `update_time`) VALUES (null, '1010', ?, '{}', '{\"type\":3,\"date\":1424014852751,\"content\":\"2\"}', '0', '2015-02-15 23:40:52', '2015-02-15 23:40:52');");
+			
 			long a = System.currentTimeMillis();
-			System.out.println("start:"+a);
 			while(rs.next()) {
 				int friend_id = rs.getInt(1);
 				System.out.println("friend_id :" + friend_id);
